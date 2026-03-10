@@ -1,0 +1,35 @@
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+if not RunService:IsStudio() then
+    return
+end
+
+local debugEvent = ReplicatedStorage:WaitForChild("ChessDebugCommand")
+
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+    if gameProcessed then
+        return
+    end
+
+    if input.KeyCode == Enum.KeyCode.One then
+        debugEvent:FireServer("blue")
+        print("Debug: switched to blue booth")
+    elseif input.KeyCode == Enum.KeyCode.Two then
+        debugEvent:FireServer("red")
+        print("Debug: switched to red booth")
+    elseif input.KeyCode == Enum.KeyCode.Three then
+        debugEvent:FireServer("spectator")
+        print("Debug: switched to spectator")
+    elseif input.KeyCode == Enum.KeyCode.Four then
+        debugEvent:FireServer("freelook")
+        print("Debug: switched to free-look")
+    elseif input.KeyCode == Enum.KeyCode.Five then
+        debugEvent:FireServer("noclip")
+        print("Debug: noclip fly enabled")
+    elseif input.KeyCode == Enum.KeyCode.Six then
+        debugEvent:FireServer("walk")
+        print("Debug: noclip fly disabled")
+    end
+end)
